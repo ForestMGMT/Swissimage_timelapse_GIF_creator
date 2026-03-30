@@ -8,6 +8,10 @@ frames/
 __pycache__/
 *.pyc
 
+# PyInstaller build artifacts
+EXE/build/
+EXE/dist/
+
 # OS files
 .DS_Store
 Thumbs.db
