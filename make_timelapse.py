@@ -30,14 +30,23 @@ def add_year_label(image: Image.Image, year: str) -> Image.Image:
 
     # Scale font so the 4-char year label is ~1/8 of image width
     font_size = max(20, frame.width // 10)
-    try:
-        font = ImageFont.truetype("arial.ttf", size=font_size)
-    except IOError:
+    font_candidates = [
+        "arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+    ]
+    font = None
+    for path in font_candidates:
         try:
-            font = ImageFont.truetype(
-                "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size=font_size)
-        except IOError:
-            font = ImageFont.load_default(size=font_size)
+            font = ImageFont.truetype(path, size=font_size)
+            break
+        except (IOError, OSError):
+            continue
+    if font is None:
+        font = ImageFont.load_default(size=font_size)
 
     x = int(frame.width  * 0.02)   # 2% from left
     y = int(frame.height * 0.02)   # 2% from top
