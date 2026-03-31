@@ -28,11 +28,16 @@ def add_year_label(image: Image.Image, year: str) -> Image.Image:
     frame = image.convert("RGBA")
     draw  = ImageDraw.Draw(frame)
 
-    # Try to load a readable font; fall back to PIL default if not found
+    # Scale font so the 4-char year label is ~1/8 of image width
+    font_size = max(20, frame.width // 18)
     try:
-        font = ImageFont.truetype("arial.ttf", size=48)
+        font = ImageFont.truetype("arial.ttf", size=font_size)
     except IOError:
-        font = ImageFont.load_default()
+        try:
+            font = ImageFont.truetype(
+                "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size=font_size)
+        except IOError:
+            font = ImageFont.load_default(size=font_size)
 
     x = int(frame.width  * 0.02)   # 2% from left
     y = int(frame.height * 0.02)   # 2% from top
