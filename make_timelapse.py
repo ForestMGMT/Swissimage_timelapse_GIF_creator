@@ -29,7 +29,7 @@ def add_year_label(image: Image.Image, year: str) -> Image.Image:
     draw  = ImageDraw.Draw(frame)
 
     # Scale font so the 4-char year label is ~1/8 of image width
-    font_size = max(20, frame.width // 18)
+    font_size = max(20, frame.width // 10)
     try:
         font = ImageFont.truetype("arial.ttf", size=font_size)
     except IOError:

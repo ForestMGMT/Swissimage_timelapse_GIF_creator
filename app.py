@@ -90,8 +90,6 @@ with col3:
         "½ fps  (2 s / frame)": 0.5,
         "1 fps  (1 s / frame)": 1,
         "2 fps  (0.5 s / frame)": 2,
-        "5 fps  (0.2 s / frame)": 5,
-        "10 fps (0.1 s / frame)": 10,
     }
     fps_label = st.selectbox("Speed", options=list(fps_options.keys()), index=2)
     fps = fps_options[fps_label]
